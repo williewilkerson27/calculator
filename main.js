@@ -62,18 +62,34 @@ function calculate() {
     } else if ( operator === '/' ) {
         // so you cant divide by zero 
         if ( currentNumber <= 0 ){
-            previousNumber = "Error"
-            previousDisplayNumber.textContent = '';
-            currentDisplayNumber.textContent = previousNumber;
-            operator = ''
+            previousNumber = "Error";
+            displayResults();
             return;
         }
-        previousNumber /= currentNumber
+        previousNumber /= currentNumber;
+                
     }
-    previousNumber = previousNumber.toString()
+    previousNumber = roundNumber(previousNumber)
+    previousNumber = previousNumber.toString();
+    displayResults();
+}
+
+// this rounds the answer to the closest digit
+function roundNumber(num) {
+    return Math.round(num * 100000) / 100000
+}
+
+// this makes sure there arent more than 11 characters in calculator
+// the slice method is being used to slice up to 11 characters and add ... to the end.
+function displayResults(){
     previousDisplayNumber.textContent = '';
-    currentDisplayNumber.textContent =  previousNumber;
     operator = '';
+    if ( previousNumber <= 11 ) {
+        currentDisplayNumber.textContent = previousNumber;
+    } else {
+        currentDisplayNumber.textContent = previousNumber.slice(0,11) + '...';
+    }
+    
 }
     
 
